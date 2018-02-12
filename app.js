@@ -18,7 +18,8 @@ var http = require('http');
 var app = express();
 //var config = require('./Config/config.js');
 //var mongodb_connection_string = config.MONGO_SERVER_URL;
-mongoose.connect("mongodb://localhost:27017");
+mongoose.connect("mongodb://lbmanager:idontknow@ds131258.mlab.com:31258/lbmanager");
+//mongoose.connect("mongodb://localhost:27017");
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() {
