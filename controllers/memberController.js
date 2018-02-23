@@ -16,7 +16,6 @@ module.exports = {
                             return res.status(500).send(err);
                         }
                         else{
-                            console.log(result);
                             return res.status(200).send({msg: "successfully created member",memberId:result.memberId});
                         }
                     });

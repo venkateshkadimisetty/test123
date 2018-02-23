@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var VerifyToken = require('./middleware/auth/VerifyToken');
 
 var mongoose = require('mongoose');
 require('./models/member')(mongoose);
@@ -13,13 +12,29 @@ require('./models/bookIssue')(mongoose);
 require('./models/bookLog')(mongoose);
 require('./models/user')(mongoose);
 
+var VerifyToken = require('./middleware/auth/VerifyToken');
+
+const acl = require('express-acl');
+
+let configObject = {
+   filename:'acl.json',
+   baseUrl:'/'
+};
+
+let responseObject = {
+ status: 'Access Denied',
+ message: 'You are not authorized to access this resource'
+};
+
+acl.config(configObject, responseObject);
+
+
 
 var http = require('http');
 var app = express();
-//var config = require('./Config/config.js');
-//var mongodb_connection_string = config.MONGO_SERVER_URL;
-mongoose.connect("mongodb://lbmanager:idontknow@ds131258.mlab.com:31258/lbmanager");
-//mongoose.connect("mongodb://localhost:27017");
+var config = require('./config/config.js');
+var mongodb_connection_string = config.MONGO_SERVER_URL;
+mongoose.connect(mongodb_connection_string);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback() {
@@ -47,7 +62,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users',VerifyToken);
+app.use('/users', acl.authorize);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
