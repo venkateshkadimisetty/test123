@@ -61,8 +61,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users',VerifyToken);
-app.use('/users', acl.authorize);
+//app.use('/users',VerifyToken);
+//app.use('/users', acl.authorize);
 app.use('/users', users);
 
 

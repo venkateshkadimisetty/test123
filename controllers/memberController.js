@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Member = mongoose.model('member');
+var mailsmtp = require('./../plugins/mailer-plugin.js');
 module.exports = {
         createMember:function (req,res) {
             console.log("Inside the create member");
@@ -16,6 +17,7 @@ module.exports = {
                             return res.status(500).send(err);
                         }
                         else{
+                            //mailsmtp.sendmail(result.memberId);
                             return res.status(200).send({msg: "successfully created member",memberId:result.memberId});
                         }
                     });
