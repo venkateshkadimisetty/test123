@@ -68,9 +68,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', index);
-//app.use('/users',VerifyToken);
-//app.use('/users', acl.authorize);
-app.use('/users', users);
+app.use('/api',VerifyToken);
+app.use('/api', acl.authorize);
+app.use('/api', users);
 
 
 // catch 404 and forward to error handler

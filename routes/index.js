@@ -8,7 +8,6 @@ router.get('/', function(req, res, next) {
 });
 
 /* User API's. */
-router.post('/user/register', userController.createUser);
 router.post('/user/login', userController.loginUser);
 
 module.exports = router;
