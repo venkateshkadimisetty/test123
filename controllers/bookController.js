@@ -25,7 +25,17 @@ module.exports = {
         },
     
         fetchBook: function (req, res) {
-            Member.find({bookId:req.body.bookId},function (err,result) {
+            Book.find({bookId:req.body.bookId},function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }
+                else{
+                    return res.status(200).send(result);
+                }
+            });
+        },
+        listAllBooks: function (req, res) {
+            Book.find({},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
                 }

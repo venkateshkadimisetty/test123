@@ -8,11 +8,13 @@ var userController = require('../controllers/userController.js');
 /* Member API's. */
 router.post('/member/create', memberController.createMember);
 router.post('/member/fetch', memberController.fetchMember);
+router.get('/member/listAllMembers', memberController.listAllMembers);
 router.post('/member/delete', memberController.deleteMember);
 
 /* Book API's. */
 router.post('/book/create', bookController.createBook);
 router.post('/book/fetch', bookController.fetchBook);
+router.get('/book/listAllBooks', bookController.listAllBooks);
 router.post('/book/delete', bookController.deleteBook);
 
 /* Book Issue API's. */

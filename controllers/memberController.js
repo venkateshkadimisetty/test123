@@ -31,7 +31,16 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
-                    console.log(result);
+                    return res.status(200).send(result);
+                }
+            });
+        },
+        listAllMembers: function (req, res) {
+            Member.find({},function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }
+                else{
                     return res.status(200).send(result);
                 }
             });
