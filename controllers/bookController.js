@@ -46,7 +46,7 @@ module.exports = {
         },
     
         deleteBook: function (req, res) {
-            Member.remove({bookId:req.body.bookId}, function (err, result) {
+            Book.remove({bookId:req.body.bookId}, function (err, result) {
                 if(err){
                     return res.status(500).send(err);
                 }
