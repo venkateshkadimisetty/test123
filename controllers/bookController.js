@@ -4,20 +4,23 @@ module.exports = {
         createBook:function (req,res) {
             console.log("Inside the create member");
             var bookObject = new Book(req.body);
-            Book.find({},function (err,result) {
+            Book.findOne().sort({availableDate: -1}).exec(function(err, result) { 
+            //Book.find({},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
                 }
                 else{
-                    var totalLength=5000+result.length;
-                    bookObject.bookId="B"+totalLength;
+                    //var totalLength=5001+result.length;
+                    var newBookId=parseInt(result.bookId.replace(/^\D+/g, ''))+1;
+                    console.log('newBookId',newBookId);
+                    bookObject.bookId="B"+newBookId;
                     bookObject.save(function (err,result) {
                         if(err){
                             return res.status(500).send(err);
                         }
                         else{
                             console.log(result);
-                            return res.status(200).send({msg: "successfully created Book",memberId:result.bookId});
+                            return res.status(200).send({msg: "successfully created Book",bookId:result.bookId});
                         }
                     });
                 }

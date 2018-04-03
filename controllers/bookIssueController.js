@@ -41,9 +41,10 @@ module.exports = {
                                     if (memberResultErr) {
                                         return res.status(500).send(memberResultErr);
                                     } else {
-                                        BookIssue.find({}, function(bookIssueErr, bookIssueResults) {
-                                            var bookIssueLength = 10000 + bookIssueResults.length;
-                                            bookIssueObject.bookIssueId = "BI" + bookIssueLength;
+                                        //BookIssue.find({}, function(bookIssueErr, bookIssueResults) {
+                                        BookIssue.findOne().sort({issuedDate: -1}).exec(function(bookIssueErr, bookIssueResults) {    
+                                            var newBookIssueId = parseInt(bookIssueResults.bookIssueId.replace(/^\D+/g, ''))+1;
+                                            bookIssueObject.bookIssueId = "BI" + newBookIssueId;
                                             bookIssueObject.save(function(bookIssueCreateErr, bookIssueCreateResp) {
                                                 if (bookIssueCreateErr) {
                                                     return res.status(500).send(bookIssueCreateErr);
@@ -93,12 +94,13 @@ module.exports = {
                                         if (memberUpdateErr) {
                                             return res.status(500).send(memberUpdateErr);
                                         } else {
-                                            BookLog.find({}, function(bookLogErr, bookLogResult) {
+                                            //BookLog.find({}, function(bookLogErr, bookLogResult) {
+                                            BookLog.findOne().sort({joinDate: -1}).exec(function(bookLogErr, bookLogResult) { 
                                                 if (bookLogErr) {
                                                     return res.status(500).send(bookLogErr);
                                                 } else {
-                                                    var bookLogLength = 20000 + bookLogResult.length;
-                                                    bookLogObject.bookLogId = "BL" + bookLogLength;
+                                                    var newBookLogId=parseInt(bookLogResult.bookLogId.replace(/^\D+/g, ''))+1;
+                                                    bookLogObject.bookLogId = "BL" + newBookLogId;
                                                     bookLogObject.save(function(bookLogErr, bookLogResult) {
                                                         if (bookLogErr) {
                                                             return res.status(500).send(bookLogErr);

@@ -5,13 +5,14 @@ module.exports = {
         createMember:function (req,res) {
             console.log("Inside the create member");
             var memberObject = new Member(req.body);
-            Member.find({},function (err,result) {
+            Member.findOne().sort({returnDate: -1}).exec(function(err, result) { 
+            //Member.find({},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
                 }
                 else{
-                    var totalLength=1001+result.length;
-                    memberObject.memberId="M"+totalLength;
+                    var newMemberId=parseInt(result.memberId.replace(/^\D+/g, ''))+1;
+                    memberObject.memberId="M"+newMemberId;
                     memberObject.save(function (err,result) {
                         if(err){
                             return res.status(500).send(err);
