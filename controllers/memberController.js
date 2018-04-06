@@ -5,13 +5,14 @@ module.exports = {
         createMember:function (req,res) {
             console.log("Inside the create member");
             var memberObject = new Member(req.body);
-            Member.findOne().sort({returnDate: -1}).exec(function(err, result) { 
+            Member.find().sort({joinDate: -1}).limit(1).exec(function(err, result) { 
             //Member.find({},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
                 }
                 else{
-                    var newMemberId=parseInt(result.memberId.replace(/^\D+/g, ''))+1;
+                    console.log("Member ***********************",result);
+                    var newMemberId=parseInt(result[0].memberId.replace(/^\D+/g, ''))+1;
                     memberObject.memberId="M"+newMemberId;
                     memberObject.save(function (err,result) {
                         if(err){
@@ -43,6 +44,15 @@ module.exports = {
                 }
                 else{
                     return res.status(200).send(result);
+                }
+            });
+        },
+        updateMember: function (req, res) {
+            Member.update({_id:req.body._id}, req.body, function (err,result) {
+                if(err){
+                   return res.status(500).send(err);
+                }else{
+                   return res.status(200).send({msg:"updated member successfully"});
                 }
             });
         },
