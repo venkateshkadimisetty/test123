@@ -11,7 +11,6 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
-                    console.log("Member ***********************",result);
                     var newMemberId=parseInt(result[0].memberId.replace(/^\D+/g, ''))+1;
                     memberObject.memberId="M"+newMemberId;
                     memberObject.save(function (err,result) {

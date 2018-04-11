@@ -10,7 +10,6 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
-                    console.log("avvvvv:",result);
                     //var totalLength=5001+result.length;
                     var newBookId=parseInt(result[0].bookId.replace(/^\D+/g, ''))+1;
                     console.log('newBookId',newBookId);
