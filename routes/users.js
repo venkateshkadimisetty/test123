@@ -21,6 +21,7 @@ router.post('/book/delete', bookController.deleteBook);
 
 /* Book Issue API's. */
 router.post('/bookIssue/issueBook', bookIssueController.issueBook);
+router.post('/bookIssue/fetchIssueBookDetails', bookIssueController.fetchBookIssueDetials);
 router.post('/bookIssue/collectBook', bookIssueController.collectBook);
 
 /* User API's. */

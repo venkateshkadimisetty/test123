@@ -28,7 +28,7 @@ module.exports = {
         },
     
         fetchBook: function (req, res) {
-            Book.find({bookId:req.body.bookId},function (err,result) {
+            Book.findOne({bookId:req.body.bookId},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
                 }

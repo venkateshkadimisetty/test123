@@ -49,7 +49,7 @@ module.exports = {
                                                 if (bookIssueCreateErr) {
                                                     return res.status(500).send(bookIssueCreateErr);
                                                 } else {
-                                                    return res.status(200).send({msg: "Book Issued Successfully",bookIssueId: bookIssueCreateResp.bookIssueId});
+                                                    return res.status(200).send({msg: "Book Issued Successfully",bookIssueId: bookIssueCreateResp});
                                                 }
                                             })
                                         })
@@ -62,7 +62,16 @@ module.exports = {
             }
         });
     },
-
+    fetchBookIssueDetials: function (req, res) {
+        BookIssue.findOne({bookIssueId:req.body.bookIssueId}).exec(function (err, result) {
+            if(err){
+                return res.status(500).send(err);
+            }
+            else{
+                return res.status(200).send(result);
+            }
+        });
+    },
     collectBook: function(req, res) {
         var bookLogObject = new BookLog(req.body);
         BookIssue.find({bookIssueId: req.body.bookIssueId}, function(bookIssueErr, bookIssueResult) {

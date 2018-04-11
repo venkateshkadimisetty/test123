@@ -27,7 +27,7 @@ module.exports = {
         },
     
         fetchMember: function (req, res) {
-            Member.find({memberId:req.body.memberId},function (err,result) {
+            Member.findOne({memberId:req.body.memberId},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
                 }
