@@ -68,8 +68,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', index);
-app.use('/api',VerifyToken);
-app.use('/api', acl.authorize);
+//app.use('/api',VerifyToken);
+//app.use('/api', acl.authorize);
 app.use('/api', users);
 
 
