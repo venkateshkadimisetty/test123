@@ -15,6 +15,7 @@ router.post('/member/delete', memberController.deleteMember);
 /* Book API's. */
 router.post('/book/create', bookController.createBook);
 router.post('/book/fetch', bookController.fetchBook);
+router.get('/book/list/:bookId', bookController.fetchBookById);
 router.post('/book/update', bookController.updateBook);
 router.get('/book/listAllBooks', bookController.listAllBooks);
 router.post('/book/delete', bookController.deleteBook);
@@ -22,6 +23,7 @@ router.post('/book/delete', bookController.deleteBook);
 /* Book Issue API's. */
 router.post('/bookIssue/issueBook', bookIssueController.issueBook);
 router.post('/bookIssue/fetchIssueBookDetails', bookIssueController.fetchBookIssueDetials);
+router.get('/bookIssue/fetchIssueBookDetails/:memberId', bookIssueController.fetchBookIssuesMemeberId);
 router.post('/bookIssue/collectBook', bookIssueController.collectBook);
 
 /* User API's. */

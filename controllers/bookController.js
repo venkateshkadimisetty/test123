@@ -37,6 +37,16 @@ module.exports = {
                 }
             });
         },
+        fetchBookById: function (req, res) {
+            Book.findOne({bookId:req.params.bookId},function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }
+                else{
+                    return res.status(200).send(result);
+                }
+            });
+        },
         listAllBooks: function (req, res) {
             Book.find({},function (err,result) {
                 if(err){
