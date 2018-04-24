@@ -9,7 +9,8 @@ module.exports = function(mongoose){
             bookId:{type:String,required:true},
             memberId:{type:String,required:true},
             issuedDate:{type:Date,required:true},
-            returnDate : {type:Date,default:Date.now},
+            returnDate : {type:Date,required:true},
+            actualReturnDate : {type:Date,default:Date.now},
             issuedBy: {type:String,required:true},
             collectedBy : {type:String,required:true},
             fine: {type:Number,default:0}

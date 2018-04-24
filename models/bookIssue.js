@@ -15,7 +15,7 @@ module.exports = function(mongoose){
             member:{ type: Schema.Types.ObjectId, ref: 'member' },
             issuedDate:{type:Date,default:Date.now},            
             returnDate : {type:Date,default:Date.now},
-            issuedBy: String
+            issuedBy: { type: String,required:true }
         });
         bookIssueSchema.pre('save', function (next) {
             var bookIssue = this;
