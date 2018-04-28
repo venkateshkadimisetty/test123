@@ -80,7 +80,7 @@ module.exports = {
         });
     },
     fetchBookIssuesMemeberId: function (req, res) {
-        BookIssue.find().populate('member','memberId').exec(function (err, bookIssues) {
+        BookIssue.find().populate('member','memberId').populate('book').exec(function (err, bookIssues) {
             if(err){
                 return res.status(500).send(err);
             }
