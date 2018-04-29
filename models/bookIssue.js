@@ -3,6 +3,10 @@ var Member = mongoose.model('member');
 var Book = mongoose.model('book');
 module.exports = function(mongoose){
         var Schema = mongoose.Schema;
+        var todayDate = new Date();
+        var retDate=new Date();
+        retDate.setDate(todayDate.getDate() + 7);
+
         var bookIssueSchema = new Schema({
             bookIssueId: {
                 type:String,
@@ -14,7 +18,7 @@ module.exports = function(mongoose){
             memberId: {type:String,required:true},
             member:{ type: Schema.Types.ObjectId, ref: 'member' },
             issuedDate:{type:Date,default:Date.now},            
-            returnDate : {type:Date,default:Date.now},
+            returnDate : {type:Date,default:retDate},
             issuedBy: { type: String,required:true }
         });
         bookIssueSchema.pre('save', function (next) {

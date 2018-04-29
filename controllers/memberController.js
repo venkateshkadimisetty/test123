@@ -11,8 +11,13 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
-                    var newMemberId=parseInt(result[0].memberId.replace(/^\D+/g, ''))+1;
-                    memberObject.memberId="M"+newMemberId;
+                    console.log("result",result);
+                    if(result.length==0){
+                        memberObject.memberId="M"+1000;
+                    }else{
+                        var newMemberId=parseInt(result[0].memberId.replace(/^\D+/g, ''))+1;
+                        memberObject.memberId="M"+newMemberId;
+                    }
                     memberObject.save(function (err,result) {
                         if(err){
                             return res.status(500).send(err);
@@ -64,13 +69,14 @@ module.exports = {
             });
         },
         collectFine: function (req, res) {
-            Member.find({memberId:req.body.memberId},function (err,result) {
+            Member.findOne({memberId:req.body.memberId},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
                 }
                 else{
-                    result[0].fine=result[0].fine-req.body.fine;
-                    result[0].save(function(fineErr,fineResult){
+                    result.fine=result.fine-req.body.fine;
+                    Member.update({_id:result._id},result,function(fineErr,fineResult){
+                    //result[0].save(function(fineErr,fineResult){
                         if(fineErr){
                             return res.status(500).send(fineErr);
                         }else{

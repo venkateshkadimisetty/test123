@@ -10,6 +10,7 @@ module.exports = function(mongoose){
             },
             bookName: {type:String,required:true},
             department : String,
+            author:String,
             isAvailable:{type:Boolean,default:true},
             availableDate: {type:Date,default:Date.now}
         });

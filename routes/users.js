@@ -4,6 +4,7 @@ var memberController = require('../controllers/memberController.js');
 var bookController = require('../controllers/bookController.js');
 var bookIssueController = require('../controllers/bookIssueController.js');
 var userController = require('../controllers/userController.js');
+var bookLogsController = require('../controllers/bookLogController.js');
 
 /* Member API's. */
 router.post('/member/create', memberController.createMember);
@@ -11,6 +12,7 @@ router.post('/member/fetch', memberController.fetchMember);
 router.post('/member/update', memberController.updateMember);
 router.get('/member/listAllMembers', memberController.listAllMembers);
 router.post('/member/delete', memberController.deleteMember);
+router.post('/member/collectFine', memberController.collectFine);
 
 /* Book API's. */
 router.post('/book/create', bookController.createBook);
@@ -21,10 +23,14 @@ router.get('/book/listAllBooks', bookController.listAllBooks);
 router.post('/book/delete', bookController.deleteBook);
 
 /* Book Issue API's. */
+router.get('/bookIssue/listAllBookIssues', bookIssueController.listAllBookIssues);
+router.get('/bookIssue/fetchIssueBookDetails/:memberId', bookIssueController.fetchBookIssuesMemeberId);
 router.post('/bookIssue/issueBook', bookIssueController.issueBook);
 router.post('/bookIssue/fetchIssueBookDetails', bookIssueController.fetchBookIssueDetials);
-router.get('/bookIssue/fetchIssueBookDetails/:memberId', bookIssueController.fetchBookIssuesMemeberId);
 router.post('/bookIssue/collectBook', bookIssueController.collectBook);
+
+/*Book Logs API's*/
+router.get('/bookLogs/listBookLogs', bookLogsController.listAllBookLogs);
 
 /* User API's. */
 router.post('/user/create', userController.createUser);

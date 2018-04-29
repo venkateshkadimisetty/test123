@@ -56,12 +56,13 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(function(req, res, next) {
+    console.log("request cookies",req.cookies);
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.set('Access-Control-Allow-Headers', 'x-access-token,X-Requested-With,Content-Type,Accept,Authorization');
   if(req.method === 'OPTIONS'){
-    res.end();
-    //return res.status(200).send();
+    //res.end();
+    return res.status(200).send();
   }else{
     next();
   }

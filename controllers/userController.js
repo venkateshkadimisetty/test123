@@ -15,6 +15,7 @@ module.exports = {
             });
         },
         loginUser: function (req, res) {
+            console.log("req obj:",req.session);
             User.findOne({username:req.body.username},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
@@ -27,6 +28,7 @@ module.exports = {
                                  var token = jwt.sign({ id: result._id }, config.TOKEN_SECRET, {
                                     expiresIn: 86400 // expires in 24 hours
                                   });
+                                 res.cookie('token',token, { maxAge: 86400, httpOnly: true });
                                 return res.status(200).send({token:token,user:result});
                              } else{
                                  return res.status(401).send({type: false, data: "Incorrect email/password"});
