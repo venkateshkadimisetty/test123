@@ -138,7 +138,7 @@ module.exports = {
                             memberResult.fine = memberResult.fine + diffDays;
                             bookLogObject.fine=diffDays;
                         }
-                        Book.findOne({bookId: req.body.bookId}, function(bookErr, bookResult) {
+                        Book.findOne({bookId: bookIssueResult.book.bookId}, function(bookErr, bookResult) {
                             if(bookResult===null){
                                 return res.status(404).send({message:"Book Not found with given bookId"})
                             }

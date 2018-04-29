@@ -72,11 +72,23 @@ module.exports = {
         },
     
         deleteBook: function (req, res) {
-            Book.remove({bookId:req.body.bookId}, function (err, result) {
+            Book.findOne({bookId:req.body.bookId},function (err,findResult) {
                 if(err){
                     return res.status(500).send(err);
+                }else{
+                    if(findResult.isAvailable){
+                        Book.remove({bookId:req.body.bookId}, function (err, result) {
+                            if(err){
+                                return res.status(500).send(err);
+                            }
+                            return res.status(200).send({msg:"successfully deleted Book"});
+                        });
+                    }else{
+                        return res.status(400).send({msg:"Book already issued to Someone.Please Collect before deleting."});
+                    }
+                    //return res.status(200).send(result);
                 }
-                return res.status(200).send({msg:"successfully deleted Book"});
             });
+
         }
     };

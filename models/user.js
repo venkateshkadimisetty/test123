@@ -6,6 +6,7 @@ module.exports = function(mongoose){
             username: {type:String,required:true,unique: true},
             email : {type:String,required:true,unique: true},
             password:{type:String,required:true},
+            fine:{type:Number,default:0},
             role:{type:String,default:"user",enum : ['user','admin']}
         });
         userSchema.pre('save', function (next) {

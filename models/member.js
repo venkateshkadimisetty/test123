@@ -23,7 +23,7 @@ module.exports = function(mongoose){
             },
             department : String,
             year:String,
-            type : {
+            membertype : {
                 type: String,
                 enum : ['Student','Faculty']
             },

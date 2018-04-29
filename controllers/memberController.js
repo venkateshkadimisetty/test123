@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Member = mongoose.model('member');
+var User = mongoose.model('user');
 var mailsmtp = require('./../plugins/mailer-plugin.js');
 module.exports = {
         createMember:function (req,res) {
@@ -61,11 +62,24 @@ module.exports = {
             });
         },
         deleteMember: function (req, res) {
-            Member.remove({memberId:req.body.memberId}, function (err, result) {
+            Member.findOne({memberId:req.body.memberId},function (err,findResult) {
                 if(err){
                     return res.status(500).send(err);
                 }
-                return res.status(200).send({msg:"successfully deleted Member"});
+                else{
+                    if(findResult.fine>0){
+                        return res.status(400).send({msg:"Please Collect Fine before deleting."});
+                    }else if((findResult.membertype==='Student' && findResult.bookLimit<3)|| (findResult.membertype==='Faculty' && findResult.bookLimit<6)){
+                        return res.status(400).send({msg:"Please Collect all books before deleting."});
+                    }else{
+                        Member.remove({memberId:req.body.memberId}, function (err, result) {
+                            if(err){
+                                return res.status(500).send(err);
+                            }
+                            return res.status(200).send({msg:"successfully deleted Member"});
+                        });
+                    }
+                }
             });
         },
         collectFine: function (req, res) {
@@ -74,15 +88,29 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
-                    result.fine=result.fine-req.body.fine;
-                    Member.update({_id:result._id},result,function(fineErr,fineResult){
-                    //result[0].save(function(fineErr,fineResult){
-                        if(fineErr){
-                            return res.status(500).send(fineErr);
+                    User.findOne({_id:req.decoded._id},function(userErr,userResult){
+                        if(userErr){
+                            return res.status(500).send(userErr);
                         }else{
-                            return res.status(200).send({message:"Collected fine from the member",remainingFine:fineResult.fine});
+                            result.fine=result.fine-req.body.fine;
+                            Member.update({_id:result._id},result,function(fineErr,fineResult){
+                                //result[0].save(function(fineErr,fineResult){
+                                if(fineErr){
+                                    return res.status(500).send(fineErr);
+                                }else{
+                                    userResult.fine=userResult.fine+req.body.fine;
+                                    User.update({_id:userResut._id},userResult,function(userUpdateErr,userUpdateRes){
+                                        if(userUpdateErr){
+                                            return res.status(500).send(userUpdateErr);
+                                        }else{
+                                            return res.status(200).send({message:"Collected fine from the member",remainingFine:fineResult.fine});
+                                        }
+                                    });
+                                }
+                            })
                         }
-                    })
+                    });
+
                 }
             });
         },
