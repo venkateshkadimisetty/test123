@@ -14,6 +14,16 @@ module.exports = {
                 }
             });
         },
+        fetchUser: function (req, res) {
+            User.findOne({_id:req.decoded._id},function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }
+                else{
+                    return res.status(200).send(result);
+                }
+            });
+        },
         loginUser: function (req, res) {
             console.log("req obj:",req.session);
             User.findOne({username:req.body.username},function (err,result) {

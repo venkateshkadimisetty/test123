@@ -34,6 +34,7 @@ router.get('/bookLogs/listBookLogs', bookLogsController.listAllBookLogs);
 
 /* User API's. */
 router.post('/user/create', userController.createUser);
+router.get('/user/profile', userController.fetchUser);
 
 
 module.exports = router;

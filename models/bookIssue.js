@@ -5,7 +5,7 @@ module.exports = function(mongoose){
         var Schema = mongoose.Schema;
         var todayDate = new Date();
         var retDate=new Date();
-        retDate.setDate(todayDate.getDate() + 7);
+        retDate.setDate(todayDate.getDate() + 14);
 
         var bookIssueSchema = new Schema({
             bookIssueId: {

@@ -148,18 +148,14 @@ module.exports = {
                                 if (bookUpdateErr) {
                                     return res.status(500).send(bookUpdateErr);
                                 } else {
-                                    //console.log("book update result::::",bookUpdateResult);
                                     Member.update({_id:memberResult._id},memberResult,function(memberUpdateErr, memberUpdateResult) {
-                                    //memberResult.save(function(memberUpdateErr, memberUpdateResult) {
                                         if (memberUpdateErr) {
                                             return res.status(500).send(memberUpdateErr);
                                         } else {
-                                            //BookLog.find({}, function(bookLogErr, bookLogResult) {
-                                            BookLog.find().sort({actualReturnDate: -1}).limit(1).exec(function(bookLogErr, bookLogResult) { 
+                                            BookLog.find().sort({actualReturnDate: -1}).limit(1).exec(function(bookLogErr, bookLogResult) {
                                                 if (bookLogErr) {
                                                     return res.status(500).send(bookLogErr);
                                                 } else {
-                                                    //console.log("bookLogResult::::::::::::::",bookLogResult);
                                                     if(bookLogResult.length>0){
                                                         var newBookLogId=parseInt(bookLogResult[0].bookLogId.replace(/^\D+/g, ''))+1;
                                                         bookLogObject.bookLogId = "BL" + newBookLogId;
@@ -170,7 +166,6 @@ module.exports = {
                                                         if (bookLogErr) {
                                                             return res.status(500).send(bookLogErr);
                                                         } else {
-                                                            //console.log("book issue log object:",bookLogResultSave);
                                                             BookIssue.remove({bookIssueId: req.body.bookIssueId}, function(bookIssueUpdateErr, bookIssueUpdateResult) {
                                                                 if (bookIssueUpdateErr) {
                                                                     return res.status(500).send(bookIssueUpdateErr);
