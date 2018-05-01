@@ -99,7 +99,7 @@ module.exports = {
                                     return res.status(500).send(fineErr);
                                 }else{
                                     userResult.fine=userResult.fine+req.body.fine;
-                                    User.update({_id:userResut._id},userResult,function(userUpdateErr,userUpdateRes){
+                                    User.update({_id:userResult._id},userResult,function(userUpdateErr,userUpdateRes){
                                         if(userUpdateErr){
                                             return res.status(500).send(userUpdateErr);
                                         }else{
