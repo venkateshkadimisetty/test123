@@ -85,7 +85,11 @@ module.exports = {
                 return res.status(500).send(err);
             }
             else{
-                return res.status(200).send(result);
+                if(!!result){
+                    return res.status(200).send(result);
+                }else{
+                    return res.status(400).send({msg:"Book Issue not found!"});
+                }
             }
         });
     },

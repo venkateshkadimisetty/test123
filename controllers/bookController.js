@@ -36,7 +36,11 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
-                    return res.status(200).send(result);
+                    if(!!result){
+                        return res.status(200).send(result);
+                    }else{
+                        return res.status(400).send({msg:"Book not exists!"});
+                    }
                 }
             });
         },
@@ -44,9 +48,12 @@ module.exports = {
             Book.findOne({bookId:req.params.bookId},function (err,result) {
                 if(err){
                     return res.status(500).send(err);
-                }
-                else{
-                    return res.status(200).send(result);
+                }else{
+                    if(!!result){
+                        return res.status(200).send(result);
+                    }else{
+                        return res.status(400).send({msg:"Book not exists!"});
+                    }
                 }
             });
         },
@@ -76,6 +83,9 @@ module.exports = {
                 if(err){
                     return res.status(500).send(err);
                 }else{
+                    if(!findResult){
+                        return res.status(400).send({msg:"Book not exists!"});
+                    }
                     if(findResult.isAvailable){
                         Book.remove({bookId:req.body.bookId}, function (err, result) {
                             if(err){

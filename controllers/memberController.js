@@ -38,7 +38,11 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
-                    return res.status(200).send(result);
+                    if(!!result){
+                        return res.status(200).send(result);
+                    }else{
+                        return res.status(400).send({msg:"Member not exists!"});
+                    }
                 }
             });
         },
@@ -67,6 +71,9 @@ module.exports = {
                     return res.status(500).send(err);
                 }
                 else{
+                    if(!findResult){
+                        return res.status(400).send({msg:"Member not exists!"});
+                    }
                     if(findResult.fine>0){
                         return res.status(400).send({msg:"Please Collect Fine before deleting."});
                     }else if((findResult.membertype==='Student' && findResult.bookLimit<3)|| (findResult.membertype==='Faculty' && findResult.bookLimit<6)){
@@ -92,6 +99,9 @@ module.exports = {
                         if(userErr){
                             return res.status(500).send(userErr);
                         }else{
+                            if(!userResult){
+                                return res.status(400).send({msg:"Member not exists!"});
+                            }
                             result.fine=result.fine-req.body.fine;
                             Member.update({_id:result._id},result,function(fineErr,fineResult){
                                 //result[0].save(function(fineErr,fineResult){
@@ -110,7 +120,6 @@ module.exports = {
                             })
                         }
                     });
-
                 }
             });
         },
