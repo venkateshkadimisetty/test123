@@ -13,7 +13,7 @@
     "group": "user",
     "permissions": [
       {
-        "resource": "api/user/create",
+        "resource": "api/user/create,api/user/listUsers,api/user/delete,api/user/update,api/user/listUser",
         "methods": "*",
         "action": "deny"
       }

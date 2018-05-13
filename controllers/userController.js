@@ -24,6 +24,61 @@ module.exports = {
                 }
             });
         },
+        fetchUserByName: function (req, res) {
+            User.findOne({username:req.params.username},function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }
+                else{
+                    return res.status(200).send(result);
+                }
+            });
+        },
+        profileUpdate: function (req, res) {
+            User.update({_id:req.decoded._id}, {email:req.body.email,username:req.body.username,password:req.body.password}, function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }else{
+                    return res.status(200).send({msg:"Updated Profile successfully"});
+                }
+            });
+        },
+        updateUser: function (req, res) {
+            User.update({username:req.body.username}, req.body, function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }else{
+                    return res.status(200).send({msg:"Updated User successfully"});
+                }
+            });
+        },
+        listAllUsers: function (req, res) {
+            User.find({},function (err,result) {
+                if(err){
+                    return res.status(500).send(err);
+                }
+                else{
+                    return res.status(200).send(result);
+                }
+            });
+        },
+        deleteUser: function (req, res) {
+            User.findOne({username:req.body.username},function (err,findResult) {
+                if(err){
+                    return res.status(500).send(err);
+                }else{
+                    if(!findResult){
+                        return res.status(400).send({msg:"Book not exists!"});
+                    }
+                    User.remove({username:req.body.username}, function (err, result) {
+                        if(err){
+                            return res.status(500).send(err);
+                        }
+                        return res.status(200).send({msg:"successfully deleted User"});
+                    });
+                }
+            });
+        },
         loginUser: function (req, res) {
             console.log("req obj:",req.session);
             User.findOne({username:req.body.username},function (err,result) {

@@ -34,7 +34,13 @@ router.get('/bookLogs/listBookLogs', bookLogsController.listAllBookLogs);
 
 /* User API's. */
 router.post('/user/create', userController.createUser);
+router.post('/user/delete', userController.deleteUser);
+router.post('/user/update', userController.updateUser);
+router.get('/user/listUser/:username', userController.fetchUserByName);
+router.get('/user/listUsers', userController.listAllUsers);
 router.get('/user/profile', userController.fetchUser);
+router.post('/user/profile/update', userController.profileUpdate);
+
 
 
 module.exports = router;
